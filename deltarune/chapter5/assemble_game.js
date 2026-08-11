@@ -1,28 +1,22 @@
 (function () {
     const RUNNER_DATA_URL = 'runner.data';
+    const GAME_UNX_PARTS = 9; // change this number as needed
 
     let assembledGameUrl = null;
 
-    async function discoverParts(base) {
+    function getParts(base, count) {
         const parts = [];
-        let i = 1;
-        while (true) {
-            const url = `${base}.part${i}`;
-            const res = await fetch(url, { method: 'HEAD' });
-            if (!res.ok) break;
-            parts.push(url);
-            i++;
+        for (let i = 1; i <= count; i++) {
+            parts.push(`${base}.part${i}`);
         }
-        if (parts.length === 0) throw new Error(`No parts found for ${base}`);
         return parts;
     }
 
     async function assembleGameUnx() {
         if (assembledGameUrl) return assembledGameUrl;
 
-        console.log('loaded Discovering game.unx parts...');
-        const partUrls = await discoverParts('game.unx');
-        console.log(`loaded Found ${partUrls.length} parts`);
+        const partUrls = getParts('game.unx', GAME_UNX_PARTS);
+        console.log(`loaded Fetching ${partUrls.length} game.unx parts...`);
 
         const responses = await Promise.all(partUrls.map((url, i) =>
             fetch(url).then(r => {
