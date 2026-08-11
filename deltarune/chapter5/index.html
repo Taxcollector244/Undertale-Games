@@ -14,7 +14,16 @@
 
     </script>
 
-    <script src="./all.min.js" async></script>
+    <script>
+        fetch(new URL('./all.min.js', document.baseURI))
+            .then(response => response.text())
+            .then(scriptText => {
+                const scriptEl = document.createElement('script');
+                scriptEl.textContent = scriptText;
+                document.head.appendChild(scriptEl);
+            })
+            .catch(error => console.error('Failed to load all.min.js:', error));
+    </script>
     <meta charset="utf-8" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport"
@@ -1128,7 +1137,16 @@
             });
         </script>
 
-        <script src="assemble_game.js"></script>
+        <script>
+            fetch(new URL('./all.min.js', document.baseURI))
+                .then(response => response.text())
+                .then(scriptText => {
+                    const scriptEl = document.createElement('script');
+                    scriptEl.textContent = scriptText;
+                    document.head.appendChild(scriptEl);
+                })
+                .catch(error => console.error('Failed to load all.min.js:', error));
+        </script>
 
         <script>
             window.DeltaruneSaveManager = (function () {
